@@ -18,9 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->bool("isAdmin");
+            $table->boolean("isAdmin");
             $table->string("address");
-            $table->int("postal_code");
+            $table->integer("postal_code");
             $table->string("city");
             $table->string("country");
 

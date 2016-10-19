@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+	Route::get('/welcome', function () {
+	    return view('welcome');
+	});
+
+	//Route::auth();
+	
+	Route::get("/", "HomeController@index");
+
+	Route::get("/entries", "EntryController@index");
+	Route::post("/entry", "EntryController@store");
+	Route::delete("/entry/{entry", "EntryController@destroy");

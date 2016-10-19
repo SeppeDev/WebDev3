@@ -17,15 +17,12 @@ class CreateWinnersTable extends Migration
             $table->increments('id');
             $table->integer("user_id")->unsigned();
             $table->foreign("user_id")
-                ->reference("id")
-                ->on("user")
-                ->onDelete("cascade");
+                ->references("id")
+                ->on("users");
             $table->integer("period_id")->unsigned();
             $table->foreign("period_id")
-                ->reference("id")
-                ->on("period")
-                ->onDelete("cascade");
-            $table->string("winning_code");
+                ->references("id")
+                ->on("periods");
 
             $table->timestamps();
         });

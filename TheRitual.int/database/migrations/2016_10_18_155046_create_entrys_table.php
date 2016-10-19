@@ -19,12 +19,12 @@ class CreateEntrysTable extends Migration
             $table->string("ip");
             $table->integer("user_id")->unsigned();
             $table->foreign("user_id")
-                ->reference("id")
+                ->references("id")
                 ->on("users")
                 ->onDelete("cascade");
             $table->integer("period_id")->unsigned();
             $table->foreign("period_id")
-                ->reference("id")
+                ->references("id")
                 ->on("periods")
                 ->onDelete("cascade");
 
