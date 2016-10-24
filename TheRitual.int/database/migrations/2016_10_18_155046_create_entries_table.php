@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEntrysTable extends Migration
+class CreateEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEntrysTable extends Migration
      */
     public function up()
     {
-        Schema::create('entrys', function (Blueprint $table) {
+        Schema::create('entries', function (Blueprint $table) {
             $table->increments('id');
             $table->string("code")->unique();
             $table->string("ip");
@@ -39,6 +39,6 @@ class CreateEntrysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('entrys');
+        Schema::dropIfExists('entries');
     }
 }

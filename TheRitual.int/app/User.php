@@ -35,6 +35,6 @@ class User extends Authenticatable
 
     public function winner()
     {
-        return $this->belongsTo(Winner::class);
+        return $this->hasMany(Winner::class);
     }
 }

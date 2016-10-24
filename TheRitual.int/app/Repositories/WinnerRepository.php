@@ -14,6 +14,11 @@ class WinnerRepository
     public function all()
     {
         return Winner::orderBy('created_at', 'asc')
+                        ->with( array("user" => function($query)
+                                    {
+                                        $query->select("id", "name", "city", "country");
+                                    })
+                            )
                         ->get();
     }
 }

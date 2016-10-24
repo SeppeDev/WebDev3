@@ -15,7 +15,7 @@ class Winner extends Model
     /*Get the user that belongs to the Winner*/
     public function user()
     {
-    	return $this->hasOne(User::class);
+    	return $this->belongsTo(User::class);
     }
 
     /*Get the period that belongs to the Winner*/

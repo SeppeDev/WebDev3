@@ -13,7 +13,7 @@ class PeriodRepository
      */
     public function all()
     {
-        return Period::orderBy('created_at', 'asc')
+        return Period::orderBy('start_date', 'asc')
                         ->get();
     }
 }
