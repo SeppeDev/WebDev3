@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
 use DateTime;
+use Mail;
 
 use App\Winner;
 
@@ -59,6 +60,7 @@ class HomeController extends Controller
     	}
     	else
     	{
+    		$this->sendEntryEmail($request);
     		return redirect( "/" );
     	}
     }
@@ -96,5 +98,15 @@ class HomeController extends Controller
     	$newWinner->user_id = $user_id;
     	$newWinner->period_id = $period_id;
     	$newWinner->save();
+    }
+
+    private function sendEntryEmail(Request $request)
+    {
+        $user = $request->user();
+
+        Mail::send('mails.entryMail', ['request' => $request], function ($message) use ($user) {
+            $message->to($user->email);
+            $message->subject('You performed a Ritual');
+        });
     }
 }
