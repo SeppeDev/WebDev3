@@ -45,7 +45,7 @@
                     <ul class="nav navbar-nav">
                         @if (Auth::check() && Auth::user()->isAdmin == 1)
 
-                            <li><a href="{{ url('/users') }}">All users</a></li>
+                            <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
 
                         @endif
                     </ul>

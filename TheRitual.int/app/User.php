@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Winner::class);
     }
+
+    public function isAdmin()
+    {
+        return $this->isAdmin;
+    }
 }

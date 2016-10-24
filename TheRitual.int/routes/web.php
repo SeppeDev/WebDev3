@@ -22,3 +22,5 @@
 	//Route::get("/entries", "EntryController@index");
 	Route::post("/entry", "HomeController@store");
 	//Route::delete("/entry/{entry", "EntryController@destroy");
+
+	Route::get("/dashboard", "DashboardController@index");
