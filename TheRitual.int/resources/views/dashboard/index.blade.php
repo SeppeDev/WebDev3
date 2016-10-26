@@ -16,93 +16,145 @@
                 <div class="panel-body">
 
                     <p>
-                        You recently bought anything from Rituals? Perform your own Ritual and maybe get some free RitualCurrency!
+                        Here you can check
+                        <ul>
+                            <li><button data-toggle="collapse" data-target="#users">All users</button></li>
+                            <li><button data-toggle="collapse" data-target="#entries">All entries</button></li>
+                            <li><button data-toggle="collapse" data-target="#periods">All periods</button></li>
+                        </ul>
                     </p>
-                    @if (!Auth::check())
-                        <br />
-                
-                        <a href="{{ url('/login') }}">Perform your own ritual</a>
-                    @endif
-                
                 </div>
             </div>
 
-            @if (Auth::check() && !Auth::user()->isAdmin)
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Welcome to the Ritual
-                    </div>
-
-                    <div class="panel-body">
-                        <!-- New Entry Form -->
-                        <form action="{{ url( 'entry' ) }}" method="POST" class="form-horizontal">
-                            {!! csrf_field() !!}
-
-                            <!-- Todo Name -->
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Period</label>
-
-                                <label class="col-sm-6 control-label">{{$currentPeriod->name}}</label>
-                            </div>
-                            <div class="form-group">
-                                <label for="code" class="col-sm-3 control-label">Code</label>
-
-                                <div class="col-sm-6">
-                                    <input type="text" name="code" id="code" class="form-control">
-                                </div>
-                            </div>
-
-                            <!-- Add Todo Button -->
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-6">
-                                    <button type="submit" class="btn btn-default">
-                                        <i class="fa fa-plus"></i> Perform your own ritual
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
-
-                    @foreach ($periods as $period)
-                        <div class="panel-heading">
-                            <h3>{{$period->name}}</h3>
-                        </div>
-
-                        <div class="panel-body">
-                            <ul class="winner-overview">
-
-                            @foreach ($entries as $entry)
-                                @if ($period->id == $entry->period_id)
-                                        <li>
-                                            {{$entry->code}}
-                                        </li>
-                                @endif
-                            @endforeach
-                            </ul>
-                        </div>
-                    @endforeach
-                </div>
-            @endif
-
+<!--Users--> 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    The Ritual Winners
+                    Users
                 </div>
-                <div class="panel-body">
-                    @foreach ($periods as $period)
-                        <h3>{{$period->name}}</h3>
+                <div class="panel-body collapse" id="users">
+                    <table id="users-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name</th>
+                                <th>
+                                    email</th>
+                                <th>
+                                    Address</th>
+                                <th>
+                                    Admin</th>
+                                <th>
+                                    Change admin</th>
+                                <th>
+                                    Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td>
+                                        {{$user->name}}</td>
+                                    <td>
+                                        {{$user->email}}</td>
+                                    <td>
+                                        {{$user->address}}, {{$user->postal_code}} {{$user->city}}, {{$user->country}}</td>
+                                    <td>
+                                        @if($user->isAdmin)
+                                            YES
+                                        @else
+                                            NO
+                                        @endif</td>
+                                    <td>
+                                        @if($user->isAdmin)
+                                            Remove admin
+                                        @else
+                                            Make admin
+                                        @endif</td>
+        <!-- Delete Button -->      <td>
+                                        <form action="{{ url('user/'.$user->id) }}" method="POST">
+                                            {!! csrf_field() !!}
+                                            {!! method_field('DELETE') !!}
 
-                        @foreach ($winners as $winner)
-                            @if ($period->id == $winner->period_id)
-                                <ul class="winner-overview">
-                                    <li>
-                                        <div class="user">{{$winner->user->name}} from {{$winner->user->city}}, {{$winner->user->country}}</div>
-                                    </li>
-                                </ul>
-                            @endif
-                        @endforeach
-                    @endforeach
+                                            <button @if ($user->isAdmin) disabled title="You can't delete administrators." @endif>Delete</button>
+                                        </form></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+<!--Entries-->            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Entries
+                </div>
+                <div class="panel-body collapse" id="entries">
+                    <table id="entries-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Code</th>
+                                <th>
+                                    Period</th>
+                                <th>
+                                    User</th>
+                                <th>
+                                    IP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($entries as $entry)
+                                <tr>
+                                    <td>
+                                        {{$entry->code}}</td>
+                                    <td>
+                                        {{$entry->period->name}}</td>
+                                    <td>
+                                        {{$entry->user->email}}</td>
+                                    <td>
+                                        {{$entry->ip}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+<!--Periods-->            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Periods
+                </div>
+                <div class="panel-body collapse" id="periods">
+                    <table id="periods-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name</th>
+                                <th>
+                                    Code</th>
+                                <th>
+                                    Startdate</th>
+                                <th>
+                                    Enddate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($periods as $period)
+                                <tr>
+                                    <td>
+                                        {{$period->name}}</td>
+                                    <td>
+                                        {{$period->code}}</td>
+                                    <td>
+                                        {{$period->start_date}}</td>
+                                    <td>
+                                        {{$period->end_date}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
