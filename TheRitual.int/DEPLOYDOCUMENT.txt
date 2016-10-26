@@ -29,5 +29,12 @@ Installatie:
 				CustomLog ${APACHE_LOG_DIR}/tester.access.log combined
 			</VirtualHost>
 
+	-PhpMyAdmin
+		-nieuwe database aanmaken "WebDev3"
+
 	- Volledige project plaatsen in /var/www
+
+	- /var/www/TheRitual.int
+		- commandline openen
+		- php artisan migrate
 
