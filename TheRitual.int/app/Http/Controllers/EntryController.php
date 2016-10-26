@@ -29,11 +29,11 @@ class EntryController extends Controller
 
     public function store(Request $request)
     {
-    	$this->validate( $request, [	"code" => "required|max:10|unique:entries",
+    	$this->validate( $request, [	"code" => "required|max:10|min:10|unique:entries",
     									]);
 
     	
-    	return redirect( $this->checkWinner($request));
+    	return $this->checkWinner($request);
     }
 
     public function destroy(Request $request, Entry $entry)
@@ -57,7 +57,8 @@ class EntryController extends Controller
 
     		$this->sendWinnerEmail($request);
             $this->sendAdminWinnerEmail($request);
-    		return "/";
+    		
+            return redirect("/")->with("success", "YOU PERFORMED A RITUAL WITH '$request->code' AND WON!!! You'll recieve a mail with instructions on how to get your price. Congratulations!!!");
     	}
     	else
     	{
@@ -68,7 +69,8 @@ class EntryController extends Controller
     											]);
 
     		$this->sendEntryEmail($request);
-    		return "/";
+    		
+            return redirect("/")->with("success", "You performed a ritual with '$request->code'");
     	}
     }
 

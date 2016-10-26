@@ -6,6 +6,9 @@
         <div class="col-md-10 col-md-offset-1">
 
             <!-- Display Validation Errors -->
+
+            @include('common.errors')
+            @include('common.success')
             
 
             <div class="panel panel-default">
