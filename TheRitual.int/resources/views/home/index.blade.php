@@ -6,7 +6,6 @@
         <div class="col-md-10 col-md-offset-1">
 
             <!-- Display Validation Errors -->
-
             @include('common.errors')
             @include('common.success')
             
@@ -51,7 +50,7 @@
                                 <label for="code" class="col-sm-3 control-label">Code</label>
 
                                 <div class="col-sm-6">
-                                    <input type="text" name="code" id="code" class="form-control">
+                                    <input type="text" name="code" id="code" class="form-control" maxlength="10">
                                 </div>
                             </div>
 
