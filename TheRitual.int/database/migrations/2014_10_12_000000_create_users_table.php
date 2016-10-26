@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string("city");
             $table->string("country");
 
+            $table->softDeletes();
+
             $table->rememberToken();
             $table->timestamps();
         });

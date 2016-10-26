@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Period;
+use DateTime;
 
 class PeriodRepository
 {
@@ -15,5 +16,22 @@ class PeriodRepository
     {
         return Period::orderBy('start_date', 'asc')
                         ->get();
+    }
+
+    public function currentPeriod($allPeriods)
+    {
+        $now = date('Y-m-d H:i:s');
+        $currentPeriod = new Period;
+        $currentPeriod->name = "There is no active period...";
+
+        foreach ($allPeriods as $period)
+        {
+            if ($period->start_date < $now && $period->end_date > $now)
+            {
+                $currentPeriod = $period;
+            }
+        }
+
+        return $currentPeriod;
     }
 }

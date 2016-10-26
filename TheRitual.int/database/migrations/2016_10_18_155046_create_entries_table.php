@@ -17,6 +17,7 @@ class CreateEntriesTable extends Migration
             $table->increments('id');
             $table->string("code")->unique();
             $table->string("ip");
+            $table->boolean("isWinner");
             $table->integer("user_id")->unsigned();
             $table->foreign("user_id")
                 ->references("id")
@@ -27,6 +28,8 @@ class CreateEntriesTable extends Migration
                 ->references("id")
                 ->on("periods")
                 ->onDelete("cascade");
+
+            $table->softDeletes();
 
             $table->timestamps();
         });

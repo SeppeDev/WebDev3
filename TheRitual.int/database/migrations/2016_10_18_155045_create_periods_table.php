@@ -20,6 +20,8 @@ class CreatePeriodsTable extends Migration
             $table->dateTime("end_date");
             $table->string("code");
 
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

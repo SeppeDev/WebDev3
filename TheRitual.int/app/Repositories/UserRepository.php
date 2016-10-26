@@ -16,4 +16,10 @@ class UserRepository
         return User::orderBy('created_at', 'asc')
                         ->get();
     }
+
+    public function admins()
+    {
+        return User::where("isAdmin", 1)
+                        ->get();
+    }
 }

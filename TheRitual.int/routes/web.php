@@ -19,8 +19,10 @@
 	
 	Route::get("/", "HomeController@index");
 
+	Route::delete("/user/{user}", "UserController@destroy");
+
 	//Route::get("/entries", "EntryController@index");
-	Route::post("/entry", "HomeController@store");
-	//Route::delete("/entry/{entry", "EntryController@destroy");
+	Route::post("/entry", "EntryController@store");
+	Route::delete("/entry/{entry}", "EntryController@destroy");
 
 	Route::get("/dashboard", "DashboardController@index");
