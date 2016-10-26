@@ -27,7 +27,7 @@ class PeriodRepository
 
     public function currentPeriod($allPeriods)
     {
-        $now = date('Y-m-d H:i:s');
+        $now = date('Y-m-d H:i:s', strtotime('+2 hours'));
         $currentPeriod = new Period;
         $currentPeriod->name = "There is no active period...";
 

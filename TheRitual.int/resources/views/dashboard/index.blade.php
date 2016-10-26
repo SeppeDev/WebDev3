@@ -6,14 +6,15 @@
         <div class="col-md-10 col-md-offset-1">
 
             <!-- Display Validation Errors -->
-            
+            @include('common.errors')
+            @include('common.success')
 
             <div class="panel panel-default">
                 <div class="panel-heading">
                     DASHBOARD
                 </div>
 
-                <div class="panel-body">
+            <!--    <div class="panel-body">
 
                     <p>
                         Here you can check
@@ -23,7 +24,7 @@
                             <li>All periods</li>
                         </ul>
                     </p>
-                </div>
+                </div> -->
             </div>
 
 <!--Users--> 
@@ -66,9 +67,17 @@
                                         @endif</td>
                                     <td>
                                         @if($user->isAdmin)
-                                            Remove admin
+                                            <form action="{{ url('user/update/'.$user->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+
+                                                <button @if ($user->deleted_at != NULL) disabled title="You can't demote a deleted admin." @endif>Demote</button>
+                                            </form>
                                         @else
-                                            Make admin
+                                            <form action="{{ url('user/update/'.$user->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+
+                                                <button @if ($user->deleted_at != NULL) disabled title="You can't promote a deleted user." @endif>Promote</button>
+                                            </form>
                                         @endif</td>
     <!-- Delete/Restore Button -->  <td>
                                         @if ($user->deleted_at == NULL)
@@ -77,14 +86,14 @@
                                                 {!! method_field('DELETE') !!}
 
                                                 <button @if ($user->isAdmin) disabled title="You can't delete administrators." @endif>Delete</button>
-                                            </form></td>
+                                            </form>
                                         @else
-                                            <form action="{{ url('user/'.$user->id) }}" method="POST">
+                                            <form action="{{ url('user/restore/'.$user->id) }}" method="POST">
                                                 {!! csrf_field() !!}
 
-                                                <button disabled>Restore</button>
-                                            </form></td>
-                                        @endif
+                                                <button>Restore</button>
+                                            </form>
+                                        @endif </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -109,11 +118,13 @@
                                     User</th>
                                 <th>
                                     IP</th>
+                                <th>
+                                    Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($entries as $entry)
-                                <tr>
+                                <tr @if ($entry->deleted_at != NULL) class="danger" @elseif ($entry->period->deleted_at != NULL) class="warning" @elseif ($entry->user->deleted_at != NULL) class="info" @endif>
                                     <td>
                                         {{$entry->code}}</td>
                                     <td>
@@ -122,6 +133,21 @@
                                         {{$entry->user->email}}</td>
                                     <td>
                                         {{$entry->ip}}</td>
+    <!-- Delete/Restore Button -->  <td>
+                                        @if ($entry->deleted_at == NULL)
+                                            <form action="{{ url('entry/'.$entry->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+                                                {!! method_field('DELETE') !!}
+
+                                                <button>Delete</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ url('entry/restore/'.$entry->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+
+                                                <button>Restore</button>
+                                            </form>
+                                        @endif </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -131,10 +157,20 @@
 
 <!--Periods-->            
             <div class="panel panel-default">
-                <a data-toggle="collapse" data-target="#periods"><div class="panel-heading">
-                    Periods
-                </div></a>
+                <a data-toggle="collapse" data-target="#periods">
+                    <div class="panel-heading">
+                        <div>
+                            Periods
+                        </div>
+                    </div>
+                </a>
                 <div class="panel-body collapse" id="periods">
+                    <div class="pull-right">
+                        <form action="{{ url('period/add') }}" method="GET">
+                            <button>Add Period</button>
+                        </form>
+                    </div>
+
                     <table id="periods-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -146,11 +182,13 @@
                                     Startdate</th>
                                 <th>
                                     Enddate</th>
+                                <th>
+                                    Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($periods as $period)
-                                <tr>
+                                <tr @if ($period->deleted_at != NULL) class="danger" @endif>
                                     <td>
                                         {{$period->name}}</td>
                                     <td>
@@ -159,6 +197,21 @@
                                         {{$period->start_date}}</td>
                                     <td>
                                         {{$period->end_date}}</td>
+    <!-- Delete/Restore Button -->  <td>
+                                        @if ($period->deleted_at == NULL)
+                                            <form action="{{ url('period/'.$period->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+                                                {!! method_field('DELETE') !!}
+
+                                                <button>Delete</button>
+                                            </form>
+                                        @else
+                                            <form action="{{ url('period/restore/'.$period->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+
+                                                <button>Restore</button>
+                                            </form>
+                                        @endif </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
+use App\User;
+use App\Period;
+use App\Entry;
+
 class RouteServiceProvider extends ServiceProvider
 {
     /**
@@ -26,6 +30,21 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        Route::bind("user", function($value)
+        {
+            return User::withTrashed()->where("id", $value)->first();
+        });
+
+        Route::bind("period", function($value)
+        {
+            return Period::withTrashed()->where("id", $value)->first();
+        });
+
+        Route::bind("entry", function($value)
+        {
+            return Entry::withTrashed()->where("id", $value)->first();
+        });
     }
 
     /**

@@ -40,7 +40,14 @@ class EntryController extends Controller
     {
         $entry->delete();
 
-        return redirect("/dashboard");
+        return redirect("/dashboard")->with("success", "Successfully deleted $entry->name");
+    }
+
+    public function restore(Request $request, Entry $entry)
+    {
+        $entry->restore();
+
+        return redirect("/dashboard")->with("success", "Successfully restored $entry->name");
     }
 
     //Private functions
@@ -70,7 +77,7 @@ class EntryController extends Controller
 
     		$this->sendEntryEmail($request);
     		
-            return redirect("/")->with("success", "You performed a ritual with '$request->code'");
+            return redirect("/")->with("success", "You performed a ritual with '$request->code' but did not win. Better luck next time!");
     	}
     }
 

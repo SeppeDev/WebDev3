@@ -30,12 +30,12 @@ class Entry extends Model
     /*Get the user that owns the Entry*/
     public function user()
     {
-    	return $this->belongsTo(User::class);
+    	return $this->belongsTo(User::class)->withTrashed();
     }
 
     /*Get the period tat owns the Entry*/
     public function period()
     {
-    	return $this->belongsTo(Period::class);
+    	return $this->belongsTo(Period::class)->withTrashed();
     }
 }

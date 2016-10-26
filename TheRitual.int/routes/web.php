@@ -19,10 +19,17 @@
 	
 	Route::get("/", "HomeController@index");
 
+	Route::post("/user/update/{user}", "UserController@update");
 	Route::delete("/user/{user}", "UserController@destroy");
+	Route::post("/user/restore/{user}", "UserController@restore");
 
-	//Route::get("/entries", "EntryController@index");
+	Route::get("/period/add", "PeriodController@index");
+	Route::post("/period/create", "PeriodController@store");
+	Route::delete("/period/{period}", "PeriodController@destroy");
+	Route::post("/period/restore/{period}", "PeriodController@restore");
+
 	Route::post("/entry", "EntryController@store");
 	Route::delete("/entry/{entry}", "EntryController@destroy");
+	Route::post("/entry/restore/{entry}", "EntryController@restore");
 
 	Route::get("/dashboard", "DashboardController@index");
