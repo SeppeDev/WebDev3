@@ -26,9 +26,9 @@ class DashboardController extends Controller
 		$this->middleware( "admin" );
 
 		$this->winners = $entries->winningEntries();
-		$this->periods = $periods->all();
-		$this->entries = $entries->all();
-		$this->users = $users->all();
+		$this->periods = $periods->allWithTrashed();
+		$this->entries = $entries->allWithTrashed();
+		$this->users = $users->allWithTrashed();
 		$this->currentPeriod = $periods->currentPeriod($this->periods);
 	}
 

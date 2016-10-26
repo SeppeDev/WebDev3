@@ -18,6 +18,13 @@ class PeriodRepository
                         ->get();
     }
 
+    public function allWithTrashed()
+    {
+        return Period::withTrashed()
+                        ->orderBy('start_date', 'asc')
+                        ->get();
+    }
+
     public function currentPeriod($allPeriods)
     {
         $now = date('Y-m-d H:i:s');

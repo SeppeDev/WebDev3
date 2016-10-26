@@ -18,6 +18,13 @@ class EntryRepository
                         ->get();
     }
 
+    public function allWithTrashed()
+    {
+        return Entry::withTrashed()
+                        ->with("user", "period")
+                        ->get();
+    }
+
     public function entryOfUser( $id )
     {
         return Entry::where("user_id", $id)

@@ -13,7 +13,12 @@ class UserRepository
      */
     public function all()
     {
-        return User::orderBy('created_at', 'asc')
+        return User::get();
+    }
+
+    public function allWithTrashed()
+    {
+        return User::withTrashed()
                         ->get();
     }
 
