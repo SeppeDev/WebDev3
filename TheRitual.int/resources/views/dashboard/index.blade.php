@@ -18,9 +18,9 @@
                     <p>
                         Here you can check
                         <ul>
-                            <li><button data-toggle="collapse" data-target="#users">All users</button></li>
-                            <li><button data-toggle="collapse" data-target="#entries">All entries</button></li>
-                            <li><button data-toggle="collapse" data-target="#periods">All periods</button></li>
+                            <li>All users</li>
+                            <li>All entries</li>
+                            <li>All periods</li>
                         </ul>
                     </p>
                 </div>
@@ -28,9 +28,9 @@
 
 <!--Users--> 
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <a data-toggle="collapse" data-target="#users"><div class="panel-heading">
                     Users
-                </div>
+                </div></a>
                 <div class="panel-body collapse" id="users">
                     <table id="users-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
@@ -51,7 +51,7 @@
                         </thead>
                         <tbody>
                             @foreach ($users as $user)
-                                <tr>
+                                <tr @if ($user->deleted_at != NULL) class="danger" @endif>
                                     <td>
                                         {{$user->name}}</td>
                                     <td>
@@ -70,13 +70,21 @@
                                         @else
                                             Make admin
                                         @endif</td>
-        <!-- Delete Button -->      <td>
-                                        <form action="{{ url('user/'.$user->id) }}" method="POST">
-                                            {!! csrf_field() !!}
-                                            {!! method_field('DELETE') !!}
+    <!-- Delete/Restore Button -->  <td>
+                                        @if ($user->deleted_at == NULL)
+                                            <form action="{{ url('user/'.$user->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+                                                {!! method_field('DELETE') !!}
 
-                                            <button @if ($user->isAdmin) disabled title="You can't delete administrators." @endif>Delete</button>
-                                        </form></td>
+                                                <button @if ($user->isAdmin) disabled title="You can't delete administrators." @endif>Delete</button>
+                                            </form></td>
+                                        @else
+                                            <form action="{{ url('user/'.$user->id) }}" method="POST">
+                                                {!! csrf_field() !!}
+
+                                                <button disabled>Restore</button>
+                                            </form></td>
+                                        @endif
                                 </tr>
                             @endforeach
                         </tbody>
@@ -86,9 +94,9 @@
 
 <!--Entries-->            
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <a data-toggle="collapse" data-target="#entries"><div class="panel-heading">
                     Entries
-                </div>
+                </div></a>
                 <div class="panel-body collapse" id="entries">
                     <table id="entries-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
@@ -123,9 +131,9 @@
 
 <!--Periods-->            
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <a data-toggle="collapse" data-target="#periods"><div class="panel-heading">
                     Periods
-                </div>
+                </div></a>
                 <div class="panel-body collapse" id="periods">
                     <table id="periods-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
