@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Period Excel</title>
+    </head>
+    <body>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        id</th>
+                    <th>
+                        name</th>
+                    <th>
+                        start_date</th>
+                    <th>
+                        end_date</th>
+                    <th>
+                        code</th>
+                    <th>
+                        deleted_at</th>
+                    <th>
+                        created_at</th>
+                    <th>
+                        updated_at</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($periods as $period)
+                    <tr>
+                        <td>
+                            {{$period->id}}</td>
+                        <td>
+                            {{$period->name}}</td>
+                        <td>
+                            {{$period->start_date}}</td>
+                        <td>
+                            {{$period->end_date}}</td>
+                        <td>
+                            {{$period->code}}</td>
+                        <td>
+                            {{$period->deleted_at}}</td>
+                        <td>
+                            {{$period->created_at}}</td>
+                        <td>
+                            {{$period->updated_at}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </body>
+</html>

@@ -33,6 +33,12 @@
                     Users
                 </div></a>
                 <div class="panel-body collapse" id="users">
+                    <div class="pull-right">
+                        <form action="{{ url('user/excel') }}" method="GET">
+                            <button>Get Excel</button>
+                        </form>
+                    </div>
+
                     <table id="users-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -107,6 +113,12 @@
                     Entries
                 </div></a>
                 <div class="panel-body collapse" id="entries">
+                    <div class="pull-right">
+                        <form action="{{ url('entry/excel') }}" method="GET">
+                            <button>Get Excel</button>
+                        </form>
+                    </div>
+
                     <table id="entries-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
@@ -169,6 +181,9 @@
                         <form action="{{ url('period/add') }}" method="GET">
                             <button>Add Period</button>
                         </form>
+                        <form action="{{ url('period/excel') }}" method="GET">
+                            <button>Get Excel</button>
+                        </form>
                     </div>
 
                     <table id="periods-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -182,6 +197,8 @@
                                     Startdate</th>
                                 <th>
                                     Enddate</th>
+                                <th>
+                                    Excel</th>
                                 <th>
                                     Delete</th>
                             </tr>
@@ -197,6 +214,11 @@
                                         {{$period->start_date}}</td>
                                     <td>
                                         {{$period->end_date}}</td>
+                                    <td>
+                                        <form action="{{ url('period/excel/'.$period->id) }}" method="GET">
+                                            <button>Get Excel</button>
+                                        </form>
+                                        </td>
     <!-- Delete/Restore Button -->  <td>
                                         @if ($period->deleted_at == NULL)
                                             <form action="{{ url('period/'.$period->id) }}" method="POST">

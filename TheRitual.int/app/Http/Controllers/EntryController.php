@@ -10,21 +10,25 @@ use Illuminate\Support\Facades\Auth;
 use Mail;
 
 use App\Entry;
+use App\Period;
+use Excel;
 
 use App\Repositories\PeriodRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\EntryRepository;
 
 class EntryController extends Controller
 {
     protected $periods;
     protected $currentPeriod;
     protected $admins;
+    protected $entries;
 
-	public function __construct(PeriodRepository $periods, UserRepository $users)
+	public function __construct(PeriodRepository $periods, UserRepository $users, EntryRepository $entries)
 	{
-		$this->periods = $periods->all();
-		$this->currentPeriod = $periods->currentPeriod($this->periods);
+		$this->currentPeriod = $periods->currentPeriod($periods->all());
         $this->admins = $users->admins();
+        $this->entries = $entries;
 	}
 
     public function store(Request $request)
@@ -48,6 +52,32 @@ class EntryController extends Controller
         $entry->restore();
 
         return redirect("/dashboard")->with("success", "Successfully restored $entry->name");
+    }
+
+    public function export(Request $request)
+    {
+        $now = date('Y-m-d');
+
+        Excel::create("$now - Entries", function($excel)
+            {
+                $excel->sheet("Entries", function($sheet)
+                {
+                    $sheet->loadView("Excel.entry", array("entries" => $this->entries->allWithTrashed()));
+                });
+            })->export("xls");
+    }
+
+    public function exportEntries(Request $request, Period $period)
+    {
+        $now = date('Y-m-d');
+
+        Excel::create("$now - Entries of period $period->name", function($excel) use ($period)
+            {
+                $excel->sheet("Entries", function($sheet) use ($period)
+                {
+                    $sheet->loadView("Excel.entryOfPeriod", array("entries" => $this->entries->entryOfPeriod($period->id)));
+                });
+            })->export("xls");
     }
 
     //Private functions

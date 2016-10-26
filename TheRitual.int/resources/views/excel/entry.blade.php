@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Entry Excel</title>
+	</head>
+	<body>
+		<table>
+            <thead>
+                <tr>
+                    <th>
+                        id</th>
+                    <th>
+                        code</th>
+                    <th>
+                        ip</th>
+                    <th>
+                        is_winner</th>
+                    <th>
+                        user_name</th>
+                    <th>
+                        period_name</th>
+                    <th>
+                        deleted_at</th>
+                    <th>
+                        created_at</th>
+                    <th>
+                        updated_at</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($entries as $entry)
+                    <tr>
+                        <td>
+                            {{$entry->id}}</td>
+                        <td>
+                            {{$entry->code}}</td>
+                        <td>
+                            {{$entry->ip}}</td>
+                        <td>
+                            @if ($entry->isWinner) YES @else NO @endif</td>
+                        <td>
+                            {{$entry->user->name}}</td>
+                        <td>
+                            {{$entry->period->name}}</td>
+                        <td>
+                            {{$entry->deleted_at}}</td>
+                        <td>
+                            {{$entry->created_at}}</td>
+                        <td>
+                            {{$entry->updated_at}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+	</body>
+</html>

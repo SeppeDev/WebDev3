@@ -9,12 +9,19 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 
 use App\Period;
+use Excel;
+
+use App\Repositories\PeriodRepository;
 
 class PeriodController extends Controller
 {
-	public function __construct()
+    protected $periods;
+
+	public function __construct(PeriodRepository $periods)
 	{
         $this->middleware( "admin" );
+
+        $this->periods = $periods->allWithTrashed();
 	}
 
     public function index(Request $request)
@@ -53,5 +60,18 @@ class PeriodController extends Controller
         $period->restore();
 
         return redirect("/dashboard")->with("success", "Successfully restored $period->name");
+    }
+
+    public function export(Request $request)
+    {
+        $now = date('Y-m-d');
+
+        Excel::create("$now - Periods", function($excel)
+            {
+                $excel->sheet("Periods", function($sheet)
+                {
+                    $sheet->loadView("Excel.period", array("periods" => $this->periods));
+                });
+            })->export("xls");
     }
 }

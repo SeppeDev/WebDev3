@@ -32,6 +32,14 @@ class EntryRepository
                         ->get();
     }
 
+    public function entryOfPeriod( $id )
+    {
+        return Entry::where("period_id", $id)
+                        ->withTrashed()
+                        ->with("user", "period")
+                        ->get();
+    }
+
     public function winningEntries()
     {
         return Entry::where("isWinner", true)
