@@ -5,11 +5,19 @@
 	</head>
 	<body>
 
-		Hi {{$request->user()->name}}, you performed a ritual with code <h1>{{$request->code}}</h1>.
+		Hi {{$request->user()->name}},
+
+			<br /><br />
+
+		you performed a ritual with code <b>{{$request->code}}</b>.
 		We sadly have to inform you that this is not a winning code =/
 		Good luck with your next code!
 
+			<br /><br />
+
 		Kind regards
+
+			<br />
 
 		Rituals
 
