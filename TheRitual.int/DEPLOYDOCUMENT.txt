@@ -1,0 +1,33 @@
+**********************************
+**********DEPLOYDOCUMENT**********
+**********************************
+
+De wedstrijd voor Rituals gaat als volgt tewerk:
+	Mensen kopen producten aan in de winkel en krijgen per product een code van 10 cijfers op hun kassa ticket gedrukt. Deze code kunnen ze ingeven op de website na ingelogged te hebben.
+
+Benodigdheden:
+	Laravel
+	PhpMyAdmin
+
+Installatie:
+	- Clean Ubuntu install
+	- apt-get install lamp-server
+	- apt-get install phpmyadmin
+
+	- /etc/apache2/apache2.conf
+		- <Directory /var/www>
+				AllowOverride All
+
+	- /etc/apache2/sites-enabled
+		- <VirtualHost *:80>
+				ServerName theritual.int
+
+				ServerAdmin goossens.seppe@hotmail.com
+				DocumentRoot /var/www/theRitual.int
+
+				ErrorLog ${APACHE_LOG_DIR}/tester.error.log
+				CustomLog ${APACHE_LOG_DIR}/tester.access.log combined
+			</VirtualHost>
+
+	- Volledige project plaatsen in /var/www
+
